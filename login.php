@@ -1,31 +1,50 @@
 <?php
-// Mulai session
 session_start();
 
-// Cek jika pengguna sudah login sebelumnya
-if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-    // Redirect ke halaman lain jika pengguna sudah login
-    header('Location: index.php');
-    exit;
-}
-
-// Proses login jika form login dikirim
-$error = false;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["submit"])) {
-        if ($_POST["username"] == "admin" && $_POST["password"] == "123") {
-            // Set session login
-            $_SESSION['loggedin'] = true;
-            
-            // Redirect ke halaman index.php setelah berhasil login
-            header("Location: index.php");
-            exit;
-        } else {
-            $error = true;
-        }
+    $conn = mysqli_connect("localhost", "root", "", "testing");
+
+    if (!$conn) {
+        die("Koneksi gagal: " . mysqli_connect_error());
     }
+
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+
+    // Gunakan prepared statement untuk mencegah SQL injection
+    $query = "SELECT * FROM users WHERE username=?";
+    $stmt = mysqli_prepare($conn, $query);
+
+    mysqli_stmt_bind_param($stmt, "s", $username);
+    mysqli_stmt_execute($stmt);
+
+    $result = mysqli_stmt_get_result($stmt);
+
+    if ($result) {
+        if (mysqli_num_rows($result) > 0) {
+            $user = mysqli_fetch_assoc($result);
+
+            // Memeriksa password menggunakan password_verify()
+            if (password_verify($password, $user["password"])) {
+                $_SESSION["username"] = $username;
+                $_SESSION["loggedIn"] = true;
+                header("Location: learning.php");
+                exit;
+            } else {
+                $error = "Username atau password salah";
+            }
+        } else {
+            $error = "Username atau password salah";
+        }
+    } else {
+        $error = "Terjadi kesalahan saat melakukan query";
+    }
+
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
 }
 ?>
+
 
 
 
@@ -95,8 +114,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                     <div class="col border mb-5">
                         <form method="post" action="">
-                            <?php if ($error) : ?>
-                                <p style="color: red; font-style: italic;">Username/password salah!</p>
+                            <?php if (isset($error)) : ?>
+                                <p style="color: red; font-style: italic;"><?php echo $error; ?></p>
                             <?php endif; ?>
                             <div class="mt-5 mb-3">
                                 <label for="username" class="form-label">Username</label>
@@ -108,6 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
                             <button type="submit" name="submit" class="mt-4 btn btn-primary">Login</button>
                         </form>
+
                     </div>
                 </div>
             </div>

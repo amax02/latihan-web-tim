@@ -1,3 +1,55 @@
+<?php
+// Koneksi ke database
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "testing";
+
+// Buat koneksi
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Periksa koneksi
+if ($conn->connect_error) {
+    die("Koneksi gagal: " . $conn->connect_error);
+}
+
+// Verifikasi jika form telah disubmit
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Proses data yang dikirim dari form
+    $name = $_POST["name"];
+    $email = $_POST["email"];
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+
+    // Lakukan validasi data yang diterima
+    if (!empty($name) && !empty($email) && !empty($username) && !empty($password)) {
+        // Escape input untuk menghindari SQL injection
+        $name = mysqli_real_escape_string($conn, $name);
+        $email = mysqli_real_escape_string($conn, $email);
+        $username = mysqli_real_escape_string($conn, $username);
+
+        // Hash password sebelum disimpan ke database
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+        // Periksa apakah username atau email sudah ada dalam database (jika diperlukan)
+
+        // Simpan data pengguna ke dalam database
+        $sql = "INSERT INTO users (name, email, username, password) VALUES ('$name', '$email', '$username', '$hashed_password')";
+
+        if ($conn->query($sql) === TRUE) {
+            // Jika data berhasil disimpan, arahkan pengguna ke halaman login atau halaman utama
+            header("Location: login.php");
+            exit;
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+    } else {
+        echo "Semua field harus diisi!";
+    }
+}
+$conn->close();
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -66,22 +118,22 @@
                         <p>For Backend</p>
                     </div>
                     <div class="col border">
-                        <form>
+                        <form method="post" action="register.php">
                             <div class="mt-5 mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Name</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="name" name="name">
                             </div>
                             <div class=" mb-3 ">
-                                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                <label for="email" class="form-label">Email address</label>
+                                <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Usersname</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="username" name="username">
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" name="password">
                             </div>
 
                             <button type="submit" class="mt-4 btn btn-primary">Create an account</button>
