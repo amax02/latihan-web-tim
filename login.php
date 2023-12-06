@@ -1,17 +1,33 @@
 <?php
-//cek apakah tombol submit sudah ditekan blm
-if (isset($_POST["submit"])) {
-    //cek username & pasword
-    if ($_POST["username"] == "admin" && $_POST["password"] == "123") {
-        //jika benar, redirect ke halaman admin
-        header("Location: index.php");
-        exit;
-    } else {
-        //jika sah, tampilkan pesan kesalahan
-        $error = true;
+// Mulai session
+session_start();
+
+// Cek jika pengguna sudah login sebelumnya
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+    // Redirect ke halaman lain jika pengguna sudah login
+    header('Location: index.php');
+    exit;
+}
+
+// Proses login jika form login dikirim
+$error = false;
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["submit"])) {
+        if ($_POST["username"] == "admin" && $_POST["password"] == "123") {
+            // Set session login
+            $_SESSION['loggedin'] = true;
+            
+            // Redirect ke halaman index.php setelah berhasil login
+            header("Location: index.php");
+            exit;
+        } else {
+            $error = true;
+        }
     }
 }
 ?>
+
+
 
 <!doctype html>
 <html lang="en">
@@ -78,20 +94,19 @@ if (isset($_POST["submit"])) {
                         <p>For Backend</p>
                     </div>
                     <div class="col border mb-5">
-                        <form>
-                            <?php if (isset($error)) : ?>
-                                <p style="color: red; font-style: italic;">username / password salah!</p>
+                        <form method="post" action="">
+                            <?php if ($error) : ?>
+                                <p style="color: red; font-style: italic;">Username/password salah!</p>
                             <?php endif; ?>
                             <div class="mt-5 mb-3">
-                                <label for="username" class="form-label">Usersname</label>
+                                <label for="username" class="form-label">Username</label>
                                 <input type="text" name="username" class="form-control" id="username">
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
                                 <input type="password" name="password" class="form-control" id="password">
                             </div>
-
-                            <button type="submit" class="mt-4 btn btn-primary">Login</button>
+                            <button type="submit" name="submit" class="mt-4 btn btn-primary">Login</button>
                         </form>
                     </div>
                 </div>
