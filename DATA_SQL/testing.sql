@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 05, 2023 at 05:44 PM
+-- Generation Time: Dec 06, 2023 at 02:13 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -18,8 +18,22 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `elerning`
+-- Database: `testing`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product`
+--
+
+CREATE TABLE `product` (
+  `id` int(11) NOT NULL,
+  `code_product` int(11) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `price` bigint(20) NOT NULL,
+  `jumlah` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -29,22 +43,30 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `nama` varchar(80) NOT NULL,
-  `username` varchar(7) NOT NULL,
-  `password` varchar(18) NOT NULL
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `nama`, `username`, `password`) VALUES
-(1, 'azzam', 'azamax1', 'asd123'),
-(2, 'defri', 'defri1', 'asd123');
+INSERT INTO `users` (`id`, `name`, `email`, `username`, `password`) VALUES
+(1, 'dfkha', 'playda.ac.id@gmail.com', 'admin', '123'),
+(2, 'dfkha', 'playda.ac.id@gmail.com', 'akaka', '$2y$10$ulfPn4nMrDAEnCm187oZR..PKcM1VeXTHogfCUQTaRZuK2VRIm1RW');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `product`
+--
+ALTER TABLE `product`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `code_product` (`code_product`);
 
 --
 -- Indexes for table `users`
@@ -55,6 +77,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `product`
+--
+ALTER TABLE `product`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
