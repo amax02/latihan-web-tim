@@ -1,18 +1,3 @@
-<?php
-//cek apakah tombol submit sudah ditekan blm
-if (isset($_POST["submit"])) {
-    //cek username & pasword
-    if ($_POST["username"] == "admin" && $_POST["password"] == "123") {
-        //jika benar, redirect ke halaman admin
-        header("Location: index.php");
-        exit;
-    } else {
-        //jika sah, tampilkan pesan kesalahan
-        $error = true;
-    }
-}
-?>
-
 <!doctype html>
 <html lang="en">
 
@@ -24,6 +9,7 @@ if (isset($_POST["submit"])) {
 </head>
 
 <body>
+    <!-- Nav START -->
     <nav>
         <div class="container-fluid">
             <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
@@ -50,7 +36,9 @@ if (isset($_POST["submit"])) {
             </header>
         </div>
     </nav>
+    <!-- Nav END -->
 
+    <!-- Contet START -->
     <section class="mt-5 container">
         <div class="row border">
             <div class="col-5 border">
@@ -66,10 +54,10 @@ if (isset($_POST["submit"])) {
                         <p>Logo</p>
                     </div>
                     <div class="col-12 border text-center">
-                        <p>Login</p>
+                        <p>Create an account</p>
                     </div>
                     <div class="col-12 border text-center">
-                        <p>Already have an account? <a href="#">Create an account</a></p>
+                        <p>Already have an account? <a href="#">Log in</a></p>
                     </div>
                     <div class="col-6 border text-center">
                         <p>For Frontend</p>
@@ -77,28 +65,36 @@ if (isset($_POST["submit"])) {
                     <div class="col-6 border text-center">
                         <p>For Backend</p>
                     </div>
-                    <div class="col border mb-5">
+                    <div class="col border">
                         <form>
-                            <?php if (isset($error)) : ?>
-                                <p style="color: red; font-style: italic;">username / password salah!</p>
-                            <?php endif; ?>
                             <div class="mt-5 mb-3">
-                                <label for="username" class="form-label">Usersname</label>
-                                <input type="text" name="username" class="form-control" id="username">
+                                <label for="exampleInputPassword1" class="form-label">Name</label>
+                                <input type="password" class="form-control" id="exampleInputPassword1">
+                            </div>
+                            <div class=" mb-3 ">
+                                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                             </div>
                             <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" name="password" class="form-control" id="password">
+                                <label for="exampleInputPassword1" class="form-label">Usersname</label>
+                                <input type="password" class="form-control" id="exampleInputPassword1">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="exampleInputPassword1">
                             </div>
 
-                            <button type="submit" class="mt-4 btn btn-primary">Login</button>
+                            <button type="submit" class="mt-4 btn btn-primary">Create an account</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    <!-- Contest END -->
 
+
+    <!-- Footer Start -->
     <footer class="container mt-5 py-5 ">
         <div class="row">
             <div class="col-6 col-md-2 mb-3">
@@ -162,6 +158,7 @@ if (isset($_POST["submit"])) {
             </ul>
         </div>
     </footer>
+    <!-- Footer End -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
