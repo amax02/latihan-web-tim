@@ -104,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <p>Login</p>
                     </div>
                     <div class="col-12 border text-center">
-                        <p>Already have an account? <a href="#">Create an account</a></p>
+                        <p>Already have an account? <a href="register.php">Create an account</a></p>
                     </div>
                     <div class="col-6 border text-center">
                         <p>For Frontend</p>

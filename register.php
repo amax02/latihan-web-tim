@@ -109,7 +109,7 @@ $conn->close();
                         <p>Create an account</p>
                     </div>
                     <div class="col-12 border text-center">
-                        <p>Already have an account? <a href="#">Log in</a></p>
+                        <p>Already have an account? <a href="login.php">Log in</a></p>
                     </div>
                     <div class="col-6 border text-center">
                         <p>For Frontend</p>
