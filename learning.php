@@ -8,7 +8,7 @@ if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true) {
     exit;
 }
 
-$conn = mysqli_connect("localhost", "root", "", "testing"); // Pastikan nama database sesuai
+$conn = mysqli_connect("localhost", "root", "", "db_kita"); // Pastikan nama database sesuai
 $result = mysqli_query($conn, "SELECT * FROM users WHERE username = '" . $_SESSION['username'] . "'"); // Ambil data pengguna yang sesuai dengan username yang sedang login
 ?>
 
@@ -23,7 +23,7 @@ $result = mysqli_query($conn, "SELECT * FROM users WHERE username = '" . $_SESSI
 
 <body>
     <h1>Halaman E-Learning</h1>
-    
+
     <!-- Tampilkan data jika sudah login -->
     <table border="1" cellpadding="10" cellspacing="0">
         <tr>
