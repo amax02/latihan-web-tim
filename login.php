@@ -2,7 +2,7 @@
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $conn = mysqli_connect("localhost", "root", "", "testing");
+    $conn = mysqli_connect($localhost, $root, "", $testing);
 
     if (!$conn) {
         die("Koneksi gagal: " . mysqli_connect_error());
